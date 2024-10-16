@@ -15,11 +15,29 @@ const UserProfile: React.FC<UserProfileProps> = ({ user, onClose }) => {
 
   const validateFields = () => {
     const newErrors: { [key: string]: string } = {};
+    if (editedUser.name.length < 2) {
+      newErrors.name = "Введите имя не менее 2-х символов";
+    }
+    if (editedUser.username.length < 3) {
+      newErrors.username = "Введите имя пользователя не менее 3-х символов";
+    }
+    if (editedUser.address.street.length < 4) {
+      newErrors.street = "Введите название улицы не менее 4-х символов";
+    }
+    if (editedUser.address.suite.length < 0) {
+      newErrors.suite = "Введите номер квартиры";
+    }
+    if (editedUser.address.city.length < 3) {
+      newErrors.city = "Введите название города не менее 3-х символов";
+    }
+    if (editedUser.address.zipcode.length < 8) {
+      newErrors.zipcode = "Введите zip-code не менее 8-х символов";
+    }
     if (!editedUser.email.includes("@")) {
-      newErrors.email = "Invalid email address";
+      newErrors.email = "Некорректный email";
     }
     if (!/^\+?\d{10,}$/.test(editedUser.phone)) {
-      newErrors.phone = "Invalid phone number";
+      newErrors.phone = "Некорректный номер телефона";
     }
     return newErrors;
   };
@@ -78,6 +96,7 @@ const UserProfile: React.FC<UserProfileProps> = ({ user, onClose }) => {
             onChange={handleChange}
             required
           />
+          {errors.name && <p className="text-red-500">{errors.name}</p>}
 
           <label className="block font-semibold">Username:</label>
           <input
@@ -88,6 +107,7 @@ const UserProfile: React.FC<UserProfileProps> = ({ user, onClose }) => {
             onChange={handleChange}
             required
           />
+          {errors.username && <p className="text-red-500">{errors.username}</p>}
 
           <label className="block font-semibold">Email:</label>
           <input
@@ -109,6 +129,7 @@ const UserProfile: React.FC<UserProfileProps> = ({ user, onClose }) => {
             onChange={handleChange}
             required
           />
+          {errors.street && <p className="text-red-500">{errors.street}</p>}
 
           <label className="block font-semibold">Suite:</label>
           <input
@@ -119,6 +140,7 @@ const UserProfile: React.FC<UserProfileProps> = ({ user, onClose }) => {
             onChange={handleChange}
             required
           />
+          {errors.suite && <p className="text-red-500">{errors.suite}</p>}
 
           <label className="block font-semibold">City:</label>
           <input
@@ -129,6 +151,7 @@ const UserProfile: React.FC<UserProfileProps> = ({ user, onClose }) => {
             onChange={handleChange}
             required
           />
+          {errors.city && <p className="text-red-500">{errors.city}</p>}
 
           <label className="block font-semibold">Zip code:</label>
           <input
