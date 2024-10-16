@@ -209,41 +209,95 @@ const UserProfile: React.FC<UserProfileProps> = ({ user, onClose }) => {
         </div>
       ) : (
         <div>
-          <p>
-            <span className="font-semibold">Name:</span> {editedUser.name}
-          </p>
-          <p>
-            <span className="font-semibold">Username:</span>{" "}
-            {editedUser.username}
-          </p>
-          <p>
-            <span className="font-semibold">Email:</span> {editedUser.email}
-          </p>
-          <p>
-            <span className="font-semibold">Street:</span>{" "}
-            {editedUser.address.street}
-          </p>
-          <p>
-            <span className="font-semibold">Suite:</span>{" "}
-            {editedUser.address.suite}
-          </p>
-          <p>
-            <span className="font-semibold">City:</span>{" "}
-            {editedUser.address.city}
-          </p>
-          <p>
-            <span className="font-semibold">Zip code:</span>{" "}
-            {editedUser.address.zipcode}
-          </p>
-          <p>
-            <span className="font-semibold">Phone:</span> {editedUser.phone}
-          </p>
-          <p>
-            <span className="font-semibold">Website:</span> {editedUser.website}
-          </p>
-          <p>
-            <span className="font-semibold">Comment:</span> {editedUser.comment}
-          </p>
+          <label className="block font-semibold">Name:</label>
+          <input
+            className="block w-full p-2 mb-2 border rounded"
+            type="text"
+            name="name"
+            value={editedUser.name}
+            disabled
+          />
+
+          <label className="block font-semibold">Username:</label>
+          <input
+            className="block w-full p-2 mb-2 border rounded"
+            type="text"
+            name="username"
+            value={editedUser.username}
+            disabled
+          />
+
+          <label className="block font-semibold">Email:</label>
+          <input
+            className="block w-full p-2 mb-2 border rounded"
+            type="email"
+            name="email"
+            value={editedUser.email}
+            disabled
+          />
+
+          <label className="block font-semibold">Street:</label>
+          <input
+            className="block w-full p-2 mb-2 border rounded"
+            type="text"
+            name="street"
+            value={editedUser.address.street}
+            disabled
+          />
+
+          <label className="block font-semibold">Suite:</label>
+          <input
+            className="block w-full p-2 mb-2 border rounded"
+            type="text"
+            name="suite"
+            value={editedUser.address.suite}
+            disabled
+          />
+
+          <label className="block font-semibold">City:</label>
+          <input
+            className="block w-full p-2 mb-2 border rounded"
+            type="text"
+            name="city"
+            value={editedUser.address.city}
+            disabled
+          />
+
+
+          <label className="block font-semibold">Zip code:</label>
+          <input
+            className="block w-full p-2 mb-2 border rounded"
+            type="text"
+            name="zipcode"
+            value={editedUser.address.zipcode}
+            disabled
+          />
+
+          <label className="block font-semibold">Phone:</label>
+          <input
+            className="block w-full p-2 mb-2 border rounded"
+            type="text"
+            name="phone"
+            value={editedUser.phone}
+            disabled
+          />
+
+          <label className="block font-semibold">Website:</label>
+          <input
+            className="block w-full p-2 mb-2 border rounded"
+            type="text"
+            name="website"
+            value={editedUser.website}
+            disabled
+          />
+
+          <label className="block font-semibold">Comment:</label>
+          <textarea
+            className="block w-full p-2 mb-2 border-2 font-bold"
+            name="comment"
+            value={editedUser.comment}
+            disabled
+          />
           <button
             className="bg-blue-500 text-white px-4 py-2 rounded mt-2 hover:bg-blue-600"
             onClick={handleEditClick}
