@@ -1,132 +1,234 @@
-// components/UserProfile.tsx
-import React, { useState, useContext } from "react";
+import { useState, useContext } from "react";
 import { User } from "../../types/types";
 import { UserContext } from "../../context/UserContext";
 
 interface UserProfileProps {
   user: User;
+  onClose: () => void;
 }
 
-const UserProfile: React.FC<UserProfileProps> = ({ user }) => {
+const UserProfile: React.FC<UserProfileProps> = ({ user, onClose }) => {
   const { setUser } = useContext(UserContext);
   const [isEditing, setIsEditing] = useState(false);
   const [editedUser, setEditedUser] = useState<User>(user);
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
 
+  const validateFields = () => {
+    const newErrors: { [key: string]: string } = {};
+    if (!editedUser.email.includes("@")) {
+      newErrors.email = "Invalid email address";
+    }
+    if (!/^\+?\d{10,}$/.test(editedUser.phone)) {
+      newErrors.phone = "Invalid phone number";
+    }
+    return newErrors;
+  };
+
   const handleEditClick = () => {
     if (isEditing) {
-      // Валидация
-      const newErrors: { [key: string]: string } = {};
-      if (!editedUser.email.includes("@")) {
-        newErrors.email = "Invalid email address";
-      }
-      if (!/^\d{5}$/.test(editedUser.zipCode)) {
-        newErrors.zipCode = "Invalid zip code";
-      }
-      if (!/^\+?\d{10,}$/.test(editedUser.phone)) {
-        newErrors.phone = "Invalid phone number";
-      }
+      const newErrors = validateFields();
       setErrors(newErrors);
 
       if (Object.keys(newErrors).length === 0) {
         setIsEditing(false);
-        setUser(editedUser); // Сохранение данных в контексте
+        setUser(editedUser);
+        console.log(editedUser);
+        onClose();
       }
     } else {
       setIsEditing(true);
     }
   };
 
+  const handleCancelClick = () => {
+    setIsEditing(false);
+    setEditedUser(user);
+    onClose();
+  };
+
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     const { name, value } = e.target;
-    setEditedUser({ ...editedUser, [name]: value });
+    if (
+      name === "street" ||
+      name === "suite" ||
+      name === "city" ||
+      name === "zipcode"
+    ) {
+      setEditedUser({
+        ...editedUser,
+        address: { ...editedUser.address, [name]: value },
+      });
+    } else {
+      setEditedUser({ ...editedUser, [name]: value });
+    }
   };
 
   return (
-    <div>
+    <div className="p-5">
       {isEditing ? (
         <div>
-          <label>Name:</label>
+          <label className="block font-semibold">Name:</label>
           <input
+            className="block w-full p-2 mb-2 border rounded"
             type="text"
             name="name"
             value={editedUser.name}
             onChange={handleChange}
+            required
           />
 
-          <label>Email:</label>
+          <label className="block font-semibold">Username:</label>
           <input
+            className="block w-full p-2 mb-2 border rounded"
+            type="text"
+            name="username"
+            value={editedUser.username}
+            onChange={handleChange}
+            required
+          />
+
+          <label className="block font-semibold">Email:</label>
+          <input
+            className="block w-full p-2 mb-2 border rounded"
             type="email"
             name="email"
             value={editedUser.email}
             onChange={handleChange}
+            required
           />
-          {errors.email && <p className="error">{errors.email}</p>}
+          {errors.email && <p className="text-red-500">{errors.email}</p>}
 
-          <label>Street:</label>
+          <label className="block font-semibold">Street:</label>
           <input
+            className="block w-full p-2 mb-2 border rounded"
             type="text"
             name="street"
-            value={editedUser.street}
+            value={editedUser.address.street}
             onChange={handleChange}
+            required
           />
 
-          <label>City:</label>
+          <label className="block font-semibold">Suite:</label>
           <input
+            className="block w-full p-2 mb-2 border rounded"
+            type="text"
+            name="suite"
+            value={editedUser.address.suite}
+            onChange={handleChange}
+            required
+          />
+
+          <label className="block font-semibold">City:</label>
+          <input
+            className="block w-full p-2 mb-2 border rounded"
             type="text"
             name="city"
-            value={editedUser.city}
+            value={editedUser.address.city}
             onChange={handleChange}
+            required
           />
 
-          <label>Zip code:</label>
+          <label className="block font-semibold">Zip code:</label>
           <input
+            className="block w-full p-2 mb-2 border rounded"
             type="text"
-            name="zipCode"
-            value={editedUser.zipCode}
+            name="zipcode"
+            value={editedUser.address.zipcode}
             onChange={handleChange}
+            required
           />
-          {errors.zipCode && <p className="error">{errors.zipCode}</p>}
+          {errors.zipcode && <p className="text-red-500">{errors.zipcode}</p>}
 
-          <label>Phone:</label>
+          <label className="block font-semibold">Phone:</label>
           <input
+            className="block w-full p-2 mb-2 border rounded"
             type="text"
             name="phone"
             value={editedUser.phone}
             onChange={handleChange}
+            required
           />
-          {errors.phone && <p className="error">{errors.phone}</p>}
+          {errors.phone && <p className="text-red-500">{errors.phone}</p>}
 
-          <label>Website:</label>
+          <label className="block font-semibold">Website:</label>
           <input
+            className="block w-full p-2 mb-2 border rounded"
             type="text"
             name="website"
             value={editedUser.website}
             onChange={handleChange}
+            required
           />
 
-          <label>Comment:</label>
+          <label className="block font-semibold">Comment:</label>
           <textarea
+            className="block w-full p-2 mb-2 border-2 font-bold"
             name="comment"
             value={editedUser.comment}
             onChange={handleChange}
           />
+          <div className="flex justify-between">
+            <button
+              className="bg-blue-500 text-white px-4 py-2 rounded mt-2 hover:bg-blue-600"
+              onClick={handleEditClick}
+            >
+              Сохранить
+            </button>
+            <button
+              className="bg-gray-500 text-white px-4 py-2 rounded mt-2 hover:bg-gray-600"
+              onClick={handleCancelClick}
+            >
+              Отмена
+            </button>
+          </div>
         </div>
       ) : (
         <div>
-          <p>Name: {editedUser.name}</p>
-          <p>Email: {editedUser.email}</p>
-          <p>Street: {editedUser.street}</p>
-          <p>City: {editedUser.city}</p>
-          <p>Zip code: {editedUser.zipCode}</p>
-          <p>Phone: {editedUser.phone}</p>
-          <p>Website: {editedUser.website}</p>
-          <p>Comment: {editedUser.comment}</p>
+          <p>
+            <span className="font-semibold">Name:</span> {editedUser.name}
+          </p>
+          <p>
+            <span className="font-semibold">Username:</span>{" "}
+            {editedUser.username}
+          </p>
+          <p>
+            <span className="font-semibold">Email:</span> {editedUser.email}
+          </p>
+          <p>
+            <span className="font-semibold">Street:</span>{" "}
+            {editedUser.address.street}
+          </p>
+          <p>
+            <span className="font-semibold">Suite:</span>{" "}
+            {editedUser.address.suite}
+          </p>
+          <p>
+            <span className="font-semibold">City:</span>{" "}
+            {editedUser.address.city}
+          </p>
+          <p>
+            <span className="font-semibold">Zip code:</span>{" "}
+            {editedUser.address.zipcode}
+          </p>
+          <p>
+            <span className="font-semibold">Phone:</span> {editedUser.phone}
+          </p>
+          <p>
+            <span className="font-semibold">Website:</span> {editedUser.website}
+          </p>
+          <p>
+            <span className="font-semibold">Comment:</span> {editedUser.comment}
+          </p>
+          <button
+            className="bg-blue-500 text-white px-4 py-2 rounded mt-2 hover:bg-blue-600"
+            onClick={handleEditClick}
+          >
+            Редактировать
+          </button>
         </div>
       )}
-      <button onClick={handleEditClick}>{isEditing ? "Save" : "Edit"}</button>
     </div>
   );
 };

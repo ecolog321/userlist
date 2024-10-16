@@ -1,36 +1,33 @@
-import React from 'react';
+
 
 interface FiltersProps {
-  onSort: (field: string, value?: string) => void;
+  onSort: (field: string) => void;
 }
 
 const Filters: React.FC<FiltersProps> = ({ onSort }) => {
   return (
     <div>
-      <h2>Фильтры</h2>
+      <h2 className="text-xl font-bold mb-4">Фильтры</h2>
       <div>
-        <label>Город:</label>
-        <select onChange={(e) => onSort('city', e.target.value)}>
-          <option value="">Все</option>
-          <option value="Москва">Москва</option>
-          {/* Другие города */}
-        </select>
+        <button 
+          className="bg-blue-600 text-white px-4 py-2 rounded mb-2 hover:bg-blue-800"
+          onClick={() => onSort('city')}
+        >
+          Сортировать по городу
+        </button>
       </div>
       <div>
-        <label>Компания:</label>
-        <select onChange={(e) => onSort('company', e.target.value)}>
-          <option value="">Все</option>
-          <option value="Компания А">Компания А</option>
-          {/* Другие компании */}
-        </select>
-      </div>
-      <div>
-        <button onClick={() => onSort('name')}>Сортировать по ФИО</button>
-        <button onClick={() => onSort('city')}>Сортировать по городу</button>
-        <button onClick={() => onSort('company')}>Сортировать по компании</button>
+        <button 
+          className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-800"
+          onClick={() => onSort('company')}
+        >
+          Сортировать по компании
+        </button>
       </div>
     </div>
   );
-};
+}
 
 export default Filters;
+
+

@@ -1,13 +1,33 @@
+export interface Address {
+  street: string;
+  suite: string;
+  city: string;
+  zipcode: string;
+  geo: {
+    lat: string;
+    lng: string;
+  };
+}
+
+export interface Company {
+  name: string;
+  catchPhrase: string;
+  bs: string;
+}
+
 export interface User {
-    id: number;
-    name: string;
-    company:string;
-    email: string;
+  id: number;
+  name: string;
+  username: string;
+  email: string;
+  address: {
     street: string;
+    suite: string;
     city: string;
-    zipCode: string;
-    phone: string;
-    website: string;
-    comment?: string;
-  }
-  
+    zipcode: string;
+  };
+  phone: string;
+  website: string;
+  company: Company;
+  comment: string;
+}

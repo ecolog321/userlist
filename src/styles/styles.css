@@ -1,0 +1,36 @@
+/* src/styles.css */
+.App {
+    display: flex;
+    padding: 20px;
+  }
+  
+  .Filters {
+    flex: 1;
+    margin-right: 20px;
+  }
+  
+  .UserList {
+    flex: 2;
+    margin-right: 20px;
+  }
+  
+  .UserProfile {
+    flex: 2;
+    padding: 20px;
+    border: 1px solid #ddd;
+  }
+  
+  .UserItem {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+    cursor: pointer;
+  }
+  
+  .UserItem:hover {
+    background-color: #f9f9f9;
+  }
+  
+  .error {
+    color: red;
+  }
+  
